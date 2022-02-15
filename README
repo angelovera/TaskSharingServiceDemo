@@ -2,7 +2,7 @@ Fabric is an open-source blockchain platform that provides blockchain services f
 
 In this repository you will find the configuration files, smart contract code, and application code of a Fabric-based task sharing service demo called "EdgeChain". The main directory is broken down in three folders:
 
-1. Task Sharing Network (configuration files of the task sharing service demo at the blockchain level)
+1. Task Sharing Network (fabric configuration files of the task sharing network (peers + msp + initialization + etc)
 
 2. Smart Contracts (source code of the installed smart contracts that supports the task sharing service on the Task Sharing Network)
 
