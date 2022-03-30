@@ -12,8 +12,8 @@ plugins {
     id 'java-library-distribution'
 }
 
-group 'HomeTransfer'
-version '1.0' 
+group 'ServiceTermsChaincode'
+version '1.0'
 
 repositories {
     // Use jcenter for resolving dependencies.
@@ -39,3 +39,4 @@ dependencies {
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
 }
+
