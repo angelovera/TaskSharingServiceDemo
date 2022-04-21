@@ -9,11 +9,10 @@ import org.hyperledger.fabric.contract.annotation.Default;
 import org.hyperledger.fabric.contract.annotation.Info;
 import org.hyperledger.fabric.contract.annotation.Transaction;
 import org.hyperledger.fabric.shim.ChaincodeException;
+import org.hyperledger.fabric.contract.annotation.License;
 import org.hyperledger.fabric.shim.ChaincodeStub;
 import TaskSharingChaincode.ledgerapi.State;
-
 import java.util.logging.Logger;
-import org.hyperledger.fabric.contract.annotation.License;
 
 //3. DEFINE CONTRACT
 @Contract(

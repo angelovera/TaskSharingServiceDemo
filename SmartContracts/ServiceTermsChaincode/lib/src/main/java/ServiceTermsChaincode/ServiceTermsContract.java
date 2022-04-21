@@ -1,13 +1,11 @@
-// 1, PACKAGE CODE
+/* 1, PACKAGE CODE */
 package ServiceTermsChaincode;
 
-
-// 2. IMPORT DEPENDENCIES
+/* 2. IMPORT DEPENDENCIES */
 import java.util.logging.Logger;
 import ServiceTermsChaincode.ledgerapi.State;
 import org.hyperledger.fabric.contract.Context;
 import org.hyperledger.fabric.contract.ContractInterface;
-import org.hyperledger.fabric.contract.annotation.Contact;
 import org.hyperledger.fabric.contract.annotation.Contract;
 import org.hyperledger.fabric.contract.annotation.Default;
 import org.hyperledger.fabric.contract.annotation.Info;
@@ -15,8 +13,7 @@ import org.hyperledger.fabric.contract.annotation.License;
 import org.hyperledger.fabric.contract.annotation.Transaction;
 import org.hyperledger.fabric.shim.ChaincodeStub;
 
-
-// 3. DEFINE CONTRACT
+/* 3. DEFINE CONTRACT */
 @Contract(
 		name="ServiceTermsContract",
 		info=@Info(
@@ -24,11 +21,13 @@ import org.hyperledger.fabric.shim.ChaincodeStub;
 				description="Chaincode to be deployed on the global channel",
 				version="0.0.1-SNAPSHOT"))
 
-
 @Default
 public class ServiceTermsContract implements ContractInterface{
 	private final static Logger LOG = Logger.getLogger(ServiceTermsContract.class.getName());
 	
+	/**
+	 * Define a custom context for service terms.	
+	 */
 	@Override
 	public Context createContext(ChaincodeStub stub) {
 		return new ServiceTermsContext(stub);
@@ -36,15 +35,12 @@ public class ServiceTermsContract implements ContractInterface{
 	
 	public ServiceTermsContract() {
 	}
-	
-	/**
-	 * Define a custom context for service terms.	
-	 */
 		
 	/**
-	 * Instantiate the contract to perform any initial setup on the ledger.
+	 * Transaction: instantiate
+	 * Details: Instantiate the contract to perform any initial setup on the ledger (not used in this version).
 	 * 
-	 * @param ctx is the transaction context 
+	 * @param ctx transaction context 
 	 */
 	@Transaction
 	public void instantiate(ServiceTermsContext ctx) {
@@ -62,11 +58,14 @@ public class ServiceTermsContract implements ContractInterface{
 	 * @param requestedResources
 	 */
 	@Transaction()
-	public ServiceTerms serviceRequest(ServiceTermsContext ctx, String serviceID, String serviceOwner, String requestedResources) {
+	public ServiceTerms serviceRequest(ServiceTermsContext ctx, String serviceID, String serviceOwner, String requestedResources, String requestTime) {
 		System.out.println(ctx);
-		ServiceTerms service = ServiceTerms.createInstance(serviceID, serviceOwner, requestedResources,"","");
+		ServiceTerms service = ServiceTerms.createInstance(serviceID, serviceOwner, requestedResources, requestTime, "", "", "", "");
 		service.setRequested();
-		service.setServiceOwner(serviceOwner);
+		// service.setServiceID(serviceID);
+		// service.setServiceOwner(serviceOwner);
+		// service.setRequestedResources(requestedResources);
+		// service.setRequestTime(requestTime);
 		System.out.println(service);
 		ctx.serviceList.addService(service);
 		return service;
@@ -80,13 +79,15 @@ public class ServiceTermsContract implements ContractInterface{
 	 * @param ctx transaction context
 	 * @param serviceID
 	 */
-	public ServiceTerms serviceReply(ServiceTermsContext ctx, String serviceID, String availableServers) {
+	public ServiceTerms serviceReply(ServiceTermsContext ctx, String serviceID, String availableServers, String replyTime) {
 		String paperKey = State.makeKey(new String[] {serviceID});
 		ServiceTerms service = ctx.serviceList.getService(paperKey);
 		if (service.isRequested()) {
 			service.setReplied();
 		}
 		service.setAvailableServers(availableServers);
+		service.setReplyTime(replyTime);
+		System.out.println(service);
 		ctx.serviceList.updateService(service);
 		return service;
 	}
@@ -118,13 +119,15 @@ public class ServiceTermsContract implements ContractInterface{
 	 * @param serviceID
 	 * @param serviceProviders
 	 */
-	public ServiceTerms serviceDecisionFinished(ServiceTermsContext ctx, String serviceID, String serviceProviders) {
+	public ServiceTerms serviceDecisionFinished(ServiceTermsContext ctx, String serviceID, String serviceProviders, String decisionTime) {
 		String paperKey = State.makeKey(new String[] {serviceID});
 		ServiceTerms service = ctx.serviceList.getService(paperKey);
 		if(service.isDecisionStarted()) {
 			service.setDecisionFinished();
 		}
 		service.setServiceProviders(serviceProviders);
+		service.setDecisionTime(decisionTime);
+		System.out.println(service);
 		ctx.serviceList.updateService(service);
 		return service;
 	}
