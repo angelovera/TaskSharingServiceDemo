@@ -12,7 +12,7 @@ PeerOrgs:
   # Org1
   # ---------------------------------------------------------------------------
   - Name: Org1
-    Domain: org1.example.com
+    Domain: org1.tasksharingnet.com
     EnableNodeOUs: true
     # ---------------------------------------------------------------------------
     # "Specs"

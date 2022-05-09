@@ -84,7 +84,7 @@ ca:
   # Key file (is only used to import a private key into BCCSP)
   keyfile:
   # Certificate file (default: ca-cert.pem)
-  certify:
+  certfile:
   # Chain file
   chainfile:
 
@@ -242,8 +242,16 @@ affiliations:
       - department2
    org2:
       - department1
+      - department2
    org3:
       - department1
+      - department2
+   org4:
+      - department1
+      - department2
+   org5:
+      - department1
+      - department2
 
 #############################################################################
 #  Signing section
@@ -303,16 +311,16 @@ signing:
 #     CA certificates though it can still issue end entity certificates.
 ###########################################################################
 csr:
-   cn: ca.org3.example.com
+   cn: ca.org3.tasksharingnet.com
    names:
-      - C: CA
-        ST: "Manitoba"
-        L: "Winnipeg"
-        O: org3.example.com
+      - C: US
+        ST: "North Carolina"
+        L: "Durham"
+        O: org3.tasksharingnet.com
         OU:
    hosts:
      - localhost
-     - org3.example.com
+     - org3.tasksharingnet.com
    ca:
       expiry: 131400h
       pathlength: 1
